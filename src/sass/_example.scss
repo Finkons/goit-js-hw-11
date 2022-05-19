@@ -21,14 +21,10 @@ header {
     border-radius: 15px 0 0 15px;
     padding-right: 5px;
     padding-left: 15px;
-    border-color: rgb(0, 255, 255);
-      border: -20px;
-      background-color: rgb(205, 234, 243);
-      &:hover{
         transition: cubic-bezier(.17,.67,.83,.67);
         transition-duration: 200ms;
-        border-color:rgb(0, 255, 255); ;
-      }
+      background-color: rgb(205, 234, 243);
+    
 }
 .search-form button{
     width: 50px;
@@ -39,13 +35,16 @@ header {
     padding-left: 0;
     border: 1px;
     text-align: center;
-    background-color: #f7f586;
+    background-color: #f0efb6;
     border-color: rgb(0, 162, 255);
-    &:hover{
-        transition: cubic-bezier(.17,.67,.83,.67);
+    transition: cubic-bezier(.17,.67,.83,.67);
     transition-duration: 200ms;
-    background-color: #f7f31e;
-      }
+
+    &:hover{
+    transition: cubic-bezier(.17,.67,.83,.67);
+    transition-duration: 200ms;
+    background-color: #fcf968;
+    }
 }
 
 .gallery {
