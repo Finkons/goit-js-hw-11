@@ -14,7 +14,7 @@ const refs = {
   loadMoreButton: document.querySelector('.load-more'),
 };
 let name = '';
-let pageNumber = 1;
+let pageNumber = 0;
 let ifShowedMessage = true;
 
 const { searchForm, galleryDivStructure, buttonSearch, loadMoreButton } = refs;
@@ -34,7 +34,7 @@ function onSearch(event) {
 
   let inputForSearch = searchForm.value.trim();
   name = inputForSearch;
-  pageNumber = 1;
+  pageNumber = 0;
 
   if (name === '') {
     Notify.failure('Sorry, there are no images matching your search query. Please try again.');
@@ -43,11 +43,11 @@ function onSearch(event) {
     return;
   }
 
-  return fetchPictures(name, pageNumber)
-    .then(pictures => renderPictures(pictures))
-    .catch(error => {
-      console.log(error);
-    });
+  // return fetchPictures(name, pageNumber)
+  //   .then(pictures => renderPictures(pictures))
+  //   .catch(error => {
+  //     console.log(error);
+  //   });
 }
 
 function renderPictures(pictures) {
@@ -120,14 +120,23 @@ function renderPictures(pictures) {
   }
 }
 
-window.addEventListener('scroll', (event) => {
-  if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
-    event.preventDefault();
-    pageNumber += 1;
-    return fetchPictures(name, pageNumber)
-      .then(pictures => renderPictures(pictures))
-      .catch(error => {
-        console.log(error);
-      })
+const infiniteObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        pageNumber += 1;
+        return fetchPictures(name, pageNumber)
+          .then(pictures => renderPictures(pictures))
+          .catch(error => {
+            console.log(error);
+          })
+      }
+    });
+    observer.unobserve(entry.turget)
+  },
+  {
+    rootMargin: '0px 50px 0px 0px',
   }
-})
+);
+
+document.querySelectorAll('img').forEach((image) => infiniteObserver.observe(image))
