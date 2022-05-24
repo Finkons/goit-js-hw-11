@@ -132,7 +132,6 @@ const infiniteObserver = new IntersectionObserver(
           })
       }
     });
-    // observer.unobserve(entry.turget)
   },
   {
     rootMargin: '150px 0px 0px',
